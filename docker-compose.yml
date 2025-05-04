@@ -18,26 +18,25 @@ services:
 
   # NestJS Application Service
   app:
-    build: # Build the NestJS application from a Dockerfile
-      context: . # The current directory (where your NestJS project is)
-      dockerfile: Dockerfile # The name of your Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - '3000:3000' # Expose the NestJS application port
+      - '3000:3000'
     environment:
-      # Database connection details for NestJS (use the service name 'db' as hostname)
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: nestjs
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: nestjs_db
     networks:
-      - nestjs-network # Add to the custom network
+      - nestjs-network
 
 networks:
-  nestjs-network: # Define a custom network for the services to communicate
+  nestjs-network:
     driver: bridge
 
 volumes:
-  pgdata: # Declare a named volume for PostgreSQL data persistence
+  pgdata:
     driver: local
