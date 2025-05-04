@@ -1,8 +1,9 @@
-import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    // Enviroment Config
+    ConfigModule.forRoot()
   ],
   providers: [],
 })
