@@ -2,9 +2,33 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  binaryTargets = "info"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Ticket {
+  id    Int     @default(autoincrement()) @id
+  number String  @unique
+  departure  String?
+  seat String?
+  details String?
+  origin String
+  destiny String
+  transportType Transport @map("transport_type")
+  transportNumber String @map("transport_number")
+  departureTime DateTime @map("departureTime")
+  arriveTime DateTime @map("arriveTime")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum Transport {
+  PLANE
+  BUS
+  TAXI
+  AIRPLANE
 }
