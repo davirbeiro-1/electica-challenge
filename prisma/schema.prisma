@@ -1,8 +1,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
-  binaryTargets = "info"
+  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
@@ -18,7 +17,7 @@ model Ticket {
   details String?
   origin String
   destiny String
-  transportType Transport @map("transport_type")
+  transportType String @map("transport_type")
   transportNumber String @map("transport_number")
   departureTime DateTime @map("departureTime")
   arriveTime DateTime @map("arriveTime")
@@ -26,9 +25,3 @@ model Ticket {
   updatedAt DateTime @updatedAt @map("updated_at")
 }
 
-enum Transport {
-  PLANE
-  BUS
-  TAXI
-  AIRPLANE
-}

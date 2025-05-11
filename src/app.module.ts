@@ -1,12 +1,11 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
+import { TicketsModule } from './modules/tickets/tickets.module';
+import { PrismaModule } from './common/modules/prisma/prisma.module';
+
 @Module({
-  imports: [
-    ConfigModule.forRoot()
-  ],
+  imports: [PrismaModule, ConfigModule.forRoot(), TicketsModule],
   providers: [],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer): void {}
-}
+export class AppModule {}
