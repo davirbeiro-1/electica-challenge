@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 import { ItineraryRepository } from './repository/itinerary.repository';
 import { CreateItineraryDTO } from './dto/';
@@ -15,16 +15,27 @@ export class ItineraryService {
   async createItinerary(
     createItineraryDTO: CreateItineraryDTO,
   ): Promise<Itinerary> {
-    const itinerary = await this.itineraryRepository.createItinerary({
-      name: createItineraryDTO.name,
-      userId: createItineraryDTO.userId,
-    });
+    try {
+      const itinerary = await this.itineraryRepository.createItinerary({
+        name: createItineraryDTO.name,
+        userId: createItineraryDTO.userId,
+      });
 
-    await this.ticketService.associateTicketsToItinerary(
-      createItineraryDTO.ticketsId,
-      itinerary.id,
-    );
+      await this.ticketService.associateTicketsToItinerary(
+        createItineraryDTO.ticketsId,
+        itinerary.id,
+      );
 
-    return this.itineraryRepository.findItineraryByIdWithTickets(itinerary.id);
+      return this.itineraryRepository.findItineraryByIdWithTickets(
+        itinerary.id,
+      );
+    } catch (error) {
+      if (error.code === 'P2002') {
+        // Customize the error message to provide more context
+        throw new ConflictException(
+          `Itinerary with name "${createItineraryDTO.name}" already exists.`,
+        );
+      }
+    }
   }
 }
