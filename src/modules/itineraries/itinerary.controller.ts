@@ -55,8 +55,8 @@ export class ItinerariesController {
   formatTickets(tickets): Ticket[] {
     const formattedTickets = tickets[0].tickets;
     const sortedTickets = formattedTickets.sort((a, b) => {
-      const dateA = new Date(a.arriveTime);
-      const dateB = new Date(b.arriveTime);
+      const dateA = new Date(a.departureTime);
+      const dateB = new Date(b.departureTime);
       return dateA.getTime() - dateB.getTime();
     });
     return sortedTickets;
