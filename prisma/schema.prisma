@@ -19,8 +19,9 @@ model Ticket {
   destiny String
   transportType String @map("transport_type")
   transportNumber String @map("transport_number")
-  departureTime DateTime @map("departureTime")
-  arriveTime DateTime @map("arriveTime")
+  departureTime DateTime @map("departure_time")
+  arriveTime DateTime @map("arrive_time")
+  userId Int @map("user_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }

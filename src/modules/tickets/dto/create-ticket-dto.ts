@@ -4,6 +4,7 @@ import {
   IsDate,
   IsIn,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
@@ -68,4 +69,9 @@ export class CreateTicketDTO implements Partial<ITicket> {
   @IsDate({ message: 'Arrive time must be a date' })
   @IsNotEmpty({ message: 'Arrive time is required' })
   arriveTime: Date;
+
+  @ApiProperty({ example: 1 })
+  @IsNumber()
+  @IsNotEmpty({ message: 'UserId is required' })
+  userId: number;
 }

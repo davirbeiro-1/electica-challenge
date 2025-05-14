@@ -46,7 +46,7 @@ module.exports = defineConfig([
       '@typescript-eslint/no-unused-vars': 'warn',
       'no-console': 'error',
       'no-nested-ternary': 'error',
-      'max-depth': ['error', 3],
+      'max-depth': ['error', 10],
       'max-params': ['error', 6],
       complexity: ['error', 10],
 

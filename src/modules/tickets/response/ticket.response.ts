@@ -32,4 +32,7 @@ export class TicketResponse {
 
   @ApiProperty({ example: new Date() })
   arriveTime: Date;
+
+  @ApiProperty({ example: 'new Date()' })
+  userId: number;
 }

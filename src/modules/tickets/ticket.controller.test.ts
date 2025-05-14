@@ -44,6 +44,7 @@ describe('TicketsController', () => {
       departure: '',
       seat: '',
       details: '',
+      userId: 1,
     };
 
     it('should return the result of ticketsService.create on success', async () => {
@@ -58,17 +59,24 @@ describe('TicketsController', () => {
         departure: '',
         seat: '',
         details: '',
+        userId: 1,
       };
       const tickets = [];
       tickets.push(createTicketDto);
       jest.mocked(ticketsService.create).mockResolvedValue(mockResponse);
       const result = await ticketsController.create(tickets);
 
-      expect(result).toEqual(mockResponse);
+      expect(result).toEqual([mockResponse]);
     });
 
     it('should throw an error if the tickets array are empty', async () => {
       const tickets = [];
+      expect(ticketsService.create).not.toHaveBeenCalled();
+      await expect(ticketsController.create(tickets)).rejects.toThrowError();
+    });
+
+    it('should throw an error if the input is not an array', async () => {
+      const tickets: any = {};
       expect(ticketsService.create).not.toHaveBeenCalled();
       await expect(ticketsController.create(tickets)).rejects.toThrowError();
     });

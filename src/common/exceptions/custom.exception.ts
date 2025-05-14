@@ -2,7 +2,7 @@
  * Custom exception class for Movie API exceptions.
  */
 
-import { HttpException } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 import { ExceptionName } from './custom.exception.enum';
 import { ICustomExceptionInfo } from './exception-info.interface';
@@ -37,19 +37,19 @@ export abstract class TicketApiException extends HttpException {
 
 export class TicketApiNotFoundException extends TicketApiException {
   constructor(message: string) {
-    super(ExceptionName.NOT_FOUND, message, 404);
+    super(ExceptionName.NOT_FOUND, message, HttpStatus.BAD_REQUEST);
   }
 }
 
 export class TicketApiConflictException extends TicketApiException {
   constructor(message: string) {
-    super(ExceptionName.CONFLICT, message, 404);
+    super(ExceptionName.CONFLICT, message, HttpStatus.BAD_REQUEST);
   }
 }
 
 export class TicketApiValidationException extends TicketApiException {
   constructor(message: string) {
-    super(ExceptionName.VALIDATION_FAILED, message, 404);
+    super(ExceptionName.VALIDATION_FAILED, message, HttpStatus.BAD_REQUEST);
   }
 }
 
@@ -61,6 +61,16 @@ export class TicketApiInternalException extends TicketApiException {
 
 export class TicketApiItemAlreadyExistsException extends TicketApiException {
   constructor(message: string) {
-    super(ExceptionName.ALREADY_EXISTS, message, 404);
+    super(ExceptionName.ALREADY_EXISTS, message, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class TicketPropertyMissingException extends TicketApiException {
+  constructor(property: string) {
+    super(
+      ExceptionName.MISSING_PROPERTY,
+      `Required property '${property}' is missing.`,
+      HttpStatus.BAD_REQUEST,
+    );
   }
 }

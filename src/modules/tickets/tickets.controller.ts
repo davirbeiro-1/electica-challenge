@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Post,
@@ -25,22 +26,27 @@ export class TicketsController {
   @ApiOperation({ summary: 'Create a ticket' })
   @ApiResponse({
     status: 201,
-    description: 'Ticket has been successfully created',
-    type: TicketResponse,
+    description: 'Tickets has been successfully created',
+    type: [TicketResponse],
   })
   @UsePipes(new ValidationPipe())
-  async create(@Body() tickets: CreateTicketDTO[]) {
+  async create(@Body() tickets: CreateTicketDTO[]): Promise<TicketResponse[]> {
     try {
-      if (tickets.length === 0) {
-        throw new Error('Its need to have at least one ticket');
+      if (!Array.isArray(tickets)) {
+        throw new BadRequestException('Input needs to be an array ');
       }
-
+      if (tickets.length === 0) {
+        throw new BadRequestException('Its need to have at least one ticket');
+      }
+      const ticketsSucessuflyCreated = [];
       for await (const createTicketDto of tickets) {
         if (Object.keys(createTicketDto).length === 0) {
-          throw new Error('Ticket cant be empty');
+          throw new BadRequestException('Ticket cant be empty');
         }
-        return this.ticketService.create(createTicketDto);
+        const ticketResponse = await this.ticketService.create(createTicketDto);
+        ticketsSucessuflyCreated.push(ticketResponse);
       }
+      return ticketsSucessuflyCreated;
     } catch (error) {
       console.error(error);
       throw error;
