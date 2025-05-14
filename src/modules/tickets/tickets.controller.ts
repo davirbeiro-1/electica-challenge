@@ -11,7 +11,6 @@ import { TicketApiExceptionResponse } from './../../common/exceptions/ticket-exc
 import { CreateTicketDTO } from './dto';
 import { TicketResponse } from './response/ticket.response';
 import { TicketsService } from './tickets.service';
-import { TicketApiItemAlreadyExistsException } from '../../common/exceptions/custom.exception';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -30,12 +29,18 @@ export class TicketsController {
     type: TicketResponse,
   })
   @UsePipes(new ValidationPipe())
-  async create(@Body() createTicketDto: CreateTicketDTO) {
+  async create(@Body() tickets: CreateTicketDTO[]) {
     try {
-      if (Object.keys(createTicketDto).length === 0) {
-        throw new Error('Request  cannot be empty');
+      if (tickets.length === 0) {
+        throw new Error('Its need to have at least one ticket');
       }
-      return this.ticketService.create(createTicketDto);
+
+      for await (const createTicketDto of tickets) {
+        if (Object.keys(createTicketDto).length === 0) {
+          throw new Error('Ticket cant be empty');
+        }
+        return this.ticketService.create(createTicketDto);
+      }
     } catch (error) {
       console.error(error);
       throw error;

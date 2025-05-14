@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
 import { describe, expect, it, jest } from '@jest/globals';
 
 import { TicketsController } from './tickets.controller';
@@ -60,18 +59,24 @@ describe('TicketsController', () => {
         seat: '',
         details: '',
       };
-
+      const tickets = [];
+      tickets.push(createTicketDto);
       jest.mocked(ticketsService.create).mockResolvedValue(mockResponse);
-
-      const result = await ticketsController.create(createTicketDto);
+      const result = await ticketsController.create(tickets);
 
       expect(result).toEqual(mockResponse);
     });
 
-    it('should throw an error if the request body is empty', async () => {
-      //@ts-expect-error
-      await expect(ticketsController.create({})).rejects.toThrowError(Error);
+    it('should throw an error if the tickets array are empty', async () => {
+      const tickets = [];
       expect(ticketsService.create).not.toHaveBeenCalled();
+      await expect(ticketsController.create(tickets)).rejects.toThrowError();
+    });
+
+    it('should throw an error if the tickets array containing empty objects', async () => {
+      const tickets: any = [{}];
+      expect(ticketsService.create).not.toHaveBeenCalled();
+      await expect(ticketsController.create(tickets)).rejects.toThrowError();
     });
 
     it('should throw the error thrown by ticketsService', async () => {
@@ -81,10 +86,11 @@ describe('TicketsController', () => {
         .mockRejectedValue(
           new TicketApiItemAlreadyExistsException(errorMessage),
         );
-
-      await expect(
-        ticketsController.create(createTicketDto),
-      ).rejects.toThrowError(TicketApiItemAlreadyExistsException);
+      const tickets = [];
+      tickets.push(createTicketDto);
+      await expect(ticketsController.create(tickets)).rejects.toThrowError(
+        TicketApiItemAlreadyExistsException,
+      );
     });
   });
 });
