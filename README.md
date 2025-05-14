@@ -85,6 +85,17 @@ The API provides the following main functionalities:
 
     ```bash
     npm run start:dev
+
+    ```
+
+6.  **Populate the database with seed data (Optional):**
+
+    npm run seed
+
+    Or, you can still our ticket POST to add specific destinations
+
+    ```
+
     ```
 
 ## Usage
