@@ -9,5 +9,6 @@ import { TicketRepository } from './repository/ticket.repository';
   imports: [PrismaModule],
   controllers: [TicketsController],
   providers: [TicketsService, TicketRepository],
+  exports: [TicketsService],
 })
 export class TicketsModule {}

@@ -1,6 +1,7 @@
 import { ITicket } from '../interface/ITicket';
 
 export class Ticket implements ITicket {
+  userId: number;
   id: number;
   number: string;
   departure: string;

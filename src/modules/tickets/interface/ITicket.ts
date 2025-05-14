@@ -1,5 +1,3 @@
-import { Transport } from '../../../common/enum/transport';
-
 export interface ITicket {
   id: number;
   number: string;
@@ -12,6 +10,7 @@ export interface ITicket {
   transportNumber: string;
   departureTime: Date;
   arriveTime: Date;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -20,13 +20,23 @@ export class TicketsService {
         );
       }
 
-      return await this.ticketRepository.createPost(data);
+      return await this.ticketRepository.createTicket(data);
     } catch (error) {
+      console.error(error);
       if (error instanceof PrismaClientValidationError) {
         throw new BadRequestException(
           'Validation error: One or more required fields are missing or invalid.',
         );
       }
+    }
+  }
+
+  async associateTicketsToItinerary(
+    ticketsId: number[],
+    id: number,
+  ): Promise<void> {
+    for await (const ticketId of ticketsId) {
+      await this.ticketRepository.associateTicketToItinerary(ticketId, id);
     }
   }
 }

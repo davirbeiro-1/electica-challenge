@@ -22,7 +22,7 @@ import { TicketsService } from './tickets.service';
 export class TicketsController {
   constructor(private readonly ticketService: TicketsService) {}
 
-  @Post()
+  @Post('/')
   @ApiOperation({ summary: 'Create a ticket' })
   @ApiResponse({
     status: 201,

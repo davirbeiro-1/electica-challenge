@@ -1,6 +1,6 @@
 import { ExceptionName } from './custom.exception.enum';
 
-const EXCEPTION_PREFIX = 'TicketAPI';
+const EXCEPTION_PREFIX = 'API';
 
 export const exceptionMetadata = {
   INTERNAL_EXCEPTION: {
