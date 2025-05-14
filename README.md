@@ -46,11 +46,7 @@ The API provides the following main functionalities:
 ## Installation
 
 1.  **Clone the repository:**
-
-    ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
-    ```
+    Clone the repo
 
 2.  **Set up the database using Docker (Recommended):**
 
@@ -94,14 +90,6 @@ The API provides the following main functionalities:
 
     Or, you can still our ticket POST to add specific destinations
 
-    ```
-
-    ```
-
 ## Usage
 
 The API documentation is available at `http://localhost:3000/docs`, where you can check the necessary schemas to sucessufly run the application
-
-## License
-
-\[Specify the license\]
